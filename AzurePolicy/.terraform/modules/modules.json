@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"azurePolicy_pra_prodsub","Source":"../Modules/AzurePolicy_Module","Dir":"../Modules/AzurePolicy_Module"},{"Key":"","Source":"","Dir":"."}]}
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"azurePolicy_pra_prodsub","Source":"../Modules/AzurePolicy_Module","Dir":"../Modules/AzurePolicy_Module"}]}
