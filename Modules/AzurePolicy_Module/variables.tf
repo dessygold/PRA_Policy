@@ -2,6 +2,6 @@ variable "policy_definition_name" {
   
 }
 
-variable "management_group_id" {
+variable "management_group_name" {
   
 }

@@ -2,7 +2,7 @@ resource "azurerm_policy_set_definition" "pra_azure_baseline01" {
   name         = var.policy_definition_name
   policy_type  = "Custom"
   display_name = var.policy_definition_name
-  management_group_id = var.management_group_id
+  management_group_name = var.management_group_name  # name only, id will throw error message 
 
 
 # MFA should be enabled on accounts with owner permissions on your subscription
