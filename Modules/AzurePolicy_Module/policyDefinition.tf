@@ -14,6 +14,12 @@ resource "azurerm_policy_set_definition" "pra_azure_baseline01" {
   policy_definition_reference {
     policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/9297c21d-2ed6-4474-b48f-163f75654ce3"
   }
+
+   # MFA should be enabled on accounts with read permissions on your subscription
+  policy_definition_reference {
+    policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/e3576e28-8b17-4677-84c3-db2990658d64"
+  }
+
 }
 
 
