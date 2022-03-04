@@ -6,6 +6,7 @@ resource "azurerm_policy_set_definition" "pra_azure_baseline01" {
 
 
 # MFA should be enabled on accounts with owner permissions on your subscription
+# Policy definition id obtain from the azure portal
   policy_definition_reference {
     policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/aa633080-8b72-40c4-a2d7-d00c03e80bed"
   }
