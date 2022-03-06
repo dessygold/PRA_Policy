@@ -1,0 +1,20 @@
+parameters = <<PARAMETERS
+    {
+    "allowedRegions": {
+      "type": "Array",
+      "metadata": {
+        "description": "The list of allowed locations for resources.",
+        "displayName": "Allowed regions",
+        "strongType": "location"
+      }
+    },
+    "listOfAllowedSKUs": {
+      "type": "Array",
+      "metadata": {
+        "description": "The list of allowed locations for resources.",
+        "displayName": "Allowed regions",
+        "strongType": "location"
+      }
+    }
+}
+PARAMETERS

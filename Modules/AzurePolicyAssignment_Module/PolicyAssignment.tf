@@ -8,4 +8,14 @@ resource "azurerm_management_group_policy_assignment" "pra_azure_baseline01_assi
   location             = var.location
   identity { type = "SystemAssigned" }
 
+  parameters = <<PARAMETERS
+    {
+    "allowedRegions": {
+      "value": ${jsonencode(var.allowedRegions)}
+      },
+     "listOfAllowedSKUs": {
+      "value": ${jsonencode(var.listOfAllowedSKUs)}
+    }
+  }
+PARAMETERS
 }

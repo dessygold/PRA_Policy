@@ -4,7 +4,42 @@ resource "azurerm_policy_set_definition" "pra_azure_baseline01" {
   display_name = var.policy_definition_name
   management_group_name = var.management_group_name  # name only, id will throw error message 
 
+  parameters = <<PARAMETERS
+    {
+    "allowedRegions": {
+      "type": "Array",
+      "metadata": {
+        "description": "The list of allowed locations for resources.",
+        "displayName": "Allowed regions",
+        "strongType": "location"
+      }
+    },
+    "listOfAllowedSKUs": {
+      "type": "Array",
+      "metadata": {
+        "description": "The list of allowed Virtual machine SKUs.",
+        "displayName": "Allowed vm SKUs",
+        "strongType": "VMSKUs"
+      }
+    }
+}
+PARAMETERS
 
+# Custom Policy1:  Allowed Regions/Locations to deploy Azure Resources
+policy_definition_reference {
+    policy_definition_id = azurerm_policy_definition.regions.id
+    parameters = {
+      "allowedRegions" = "[parameters('allowedRegions')]"
+    }
+  }
+
+ # Built-In with Custom Parameters: Allowed Virtual Machine size (SKUs)
+policy_definition_reference {
+    policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/########"
+    parameters = {
+      "listOfAllowedSKUs" = "[parameters('listOfAllowedSKUs')]"
+    }
+  }
 # MFA should be enabled on accounts with owner permissions on your subscription
 # Policy definition id obtain from the azure portal
   policy_definition_reference {
