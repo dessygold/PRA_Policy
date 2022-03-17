@@ -15,7 +15,17 @@ resource "azurerm_management_group_policy_assignment" "pra_azure_baseline01_assi
       },
      "listOfAllowedSKUs": {
       "value": ${jsonencode(var.listOfAllowedSKUs)}
+    },
+     "activitylog_operationName": {
+      "value": ${jsonencode(var.activitylog_operationName)}
+    },
+    "activitylog_admin_operationName": {
+      "value": ${jsonencode(var.activitylog_admin_operationName)}
+    },
+    "activitylog_sec_operationName": {
+      "value": ${jsonencode(var.activitylog_sec_operationName)}
     }
   }
 PARAMETERS
 }
+

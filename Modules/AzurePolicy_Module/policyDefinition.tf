@@ -21,6 +21,27 @@ resource "azurerm_policy_set_definition" "pra_azure_baseline01" {
         "displayName": "Allowed vm SKUs",
         "strongType": "VMSKUs"
       }
+    },
+    "activitylog_operationName": {
+      "type": "String",
+      "metadata": {
+        "description": "Policy Operation name for which activity log alert should exist.",
+        "displayName": "Operation Name"
+      }
+    },
+    "activitylog_admin_operationName": {
+      "type": "String",
+      "metadata": {
+        "description": "This policy audits specific Administrative operations with no activity log alerts configured..",
+        "displayName": "An activity log alert should exist for specific Administrative operations"
+      }
+    },
+    "activitylog_sec_operationName": {
+      "type": "String",
+      "metadata": {
+        "description": "This policy audits specific Security operations with no activity log alerts configured",
+        "displayName": "An activity log alert should exist for specific Security operations"
+      }
     }
 }
 PARAMETERS
@@ -28,17 +49,21 @@ PARAMETERS
 # Custom Policy1:  Allowed Regions/Locations to deploy Azure Resources
 policy_definition_reference {
     policy_definition_id = azurerm_policy_definition.regions.id
-    parameters = {
-      "allowedRegions" = "[parameters('allowedRegions')]"
+    parameter_values     = <<VALUE
+    {
+      "allowedRegions": {"value": "[parameters('allowedRegions')]"}
     }
+    VALUE
   }
 
  # Built-In with Custom Parameters: Allowed Virtual Machine size (SKUs)
 policy_definition_reference {
-    policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/########"
-    parameters = {
-      "listOfAllowedSKUs" = "[parameters('listOfAllowedSKUs')]"
+    policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/cccc23c7-8427-4f53-ad12-b6a63eb452b3"
+    parameter_values     = <<VALUE
+    {
+      "listOfAllowedSKUs": {"value": "[parameters('listOfAllowedSKUs')]"}
     }
+    VALUE
   }
 # MFA should be enabled on accounts with owner permissions on your subscription
 # Policy definition id obtain from the azure portal
@@ -304,16 +329,31 @@ policy_definition_reference {
   # An activity log alert should exist for specific Policy operations
   policy_definition_reference {
     policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/c5447c04-a4d7-4ba8-a263-c9ee321a6858"
+    parameter_values     = <<VALUE
+    {
+      "operationName": {"value": "[parameters('activitylog_operationName')]"}
+    }
+    VALUE
   }
 
   # An activity log alert should exist for specific Administrative operations
   policy_definition_reference {
     policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/b954148f-4c11-4c38-8221-be76711e194a"
+    parameter_values     = <<VALUE
+    {
+      "operationName": {"value": "[parameters('activitylog_admin_operationName')]"}
+    }
+    VALUE
   }
 
   # An activity log alert should exist for specific Security operations
   policy_definition_reference {
     policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/3b980d31-7904-4bb7-8575-5665739a8052"
+    parameter_values     = <<VALUE
+    {
+      "operationName": {"value": "[parameters('activitylog_sec_operationName')]"}
+    }
+    VALUE
   }
 
   # Network Watcher should be enabled
@@ -321,10 +361,10 @@ policy_definition_reference {
     policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/b6e2945c-0b7b-40f5-9233-7a5323b5cdc6"
   }
 
-  # Only approved VM extensions should be installed
-  policy_definition_reference {
-    policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/c0e996f8-39cf-4af9-9f45-83fbde810432"
-  }
+  # # Only approved VM extensions should be installed
+  # policy_definition_reference {
+  #   policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/c0e996f8-39cf-4af9-9f45-83fbde810432"
+  # }
 
   # Key Vault keys should have an expiration date
   policy_definition_reference {
